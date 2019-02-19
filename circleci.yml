@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    machine:
+      enabled: true
+    working_directory: ~/tmp/code_deploy_example
+    steps:
+    - checkout
+    - run: sudo apt-get update && sudo apt-get install nginx -y
+    - run: sudo pip install awscli
+    - run: aws s3 sync ~/tmp/code_deploy_example s3://s3awscirclecidemo --delete
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
